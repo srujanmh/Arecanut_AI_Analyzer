@@ -12,6 +12,9 @@ import GlassCard from '../components/GlassCard';
 import StatCard from '../components/StatCard';
 import { SystemState } from '../utils/simulator';
 
+// Configurable API base URL: set VITE_API_BASE in .env for deployment
+const API_BASE = import.meta.env.VITE_API_BASE || 'http://127.0.0.1:8000';
+
 interface ModuleProps {
   state: SystemState;
   setState: React.Dispatch<React.SetStateAction<SystemState>>;
@@ -894,7 +897,7 @@ export function PestDisease({ state, setState }: ModuleProps) {
     formData.append("file", file);
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/v1/ai/detect-pest", {
+      const response = await fetch(`${API_BASE}/api/v1/ai/detect-pest`, {
         method: "POST",
         body: formData,
       });
@@ -1233,7 +1236,7 @@ export function FoliarSpray({ state, setState }: ModuleProps) {
     
     try {
       // Upload flight plan to the backend telemetry system
-      await fetch("http://127.0.0.1:8000/api/v1/drone/upload-mission", {
+      await fetch(`${API_BASE}/api/v1/drone/upload-mission`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(state.drone.path)
@@ -2093,7 +2096,7 @@ export function AIModelVisualizer() {
   const fetchMetrics = async () => {
     try {
       setLoadingMetrics(true);
-      const res = await fetch("http://127.0.0.1:8000/api/v1/ai/model-info");
+      const res = await fetch(`${API_BASE}/api/v1/ai/model-info`);
       if (!res.ok) throw new Error("Failed to load model metrics");
       const data = await res.json();
       setMetrics(data);
@@ -2108,7 +2111,7 @@ export function AIModelVisualizer() {
   const fetchDataset = async () => {
     try {
       setLoadingDataset(true);
-      const res = await fetch("http://127.0.0.1:8000/api/v1/ai/dataset-preview?limit=15");
+      const res = await fetch(`${API_BASE}/api/v1/ai/dataset-preview?limit=15`);
       if (!res.ok) throw new Error("Failed to load dataset preview");
       const data = await res.json();
       setDataset(data);
@@ -2123,7 +2126,7 @@ export function AIModelVisualizer() {
     try {
       setTraining(true);
       setTrainSuccess(false);
-      const res = await fetch("http://127.0.0.1:8000/api/v1/ai/train", {
+      const res = await fetch(`${API_BASE}/api/v1/ai/train`, {
         method: "POST"
       });
       if (!res.ok) throw new Error("Training failed");
@@ -2831,7 +2834,7 @@ export function AIChatAssistant({ state, onExecuteCommand }: { state?: any; onEx
         content: m.text
       }));
 
-      const response = await fetch("http://127.0.0.1:8000/api/v1/ai/chat", {
+      const response = await fetch(`${API_BASE}/api/v1/ai/chat`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -2871,7 +2874,7 @@ export function AIChatAssistant({ state, onExecuteCommand }: { state?: any; onEx
         ...prev,
         {
           sender: 'ai',
-          text: "⚠️ Connection Error: Failed to reach backend API. Ensure FastAPI is running at http://localhost:8000 or your GEMINI_API_KEY environment variable is configured correctly."
+          text: `⚠️ Connection Error: Failed to reach backend API at ${API_BASE}. Ensure FastAPI is running or your GEMINI_API_KEY environment variable is configured correctly.`
         }
       ]);
     } finally {
