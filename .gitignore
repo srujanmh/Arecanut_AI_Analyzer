@@ -12,6 +12,9 @@ ENV/
 *.joblib
 *.db
 *.sqlite
+!backend/app/ml/disease_classifier.joblib
+!backend/app/ml/arecanut_leaf_features.csv
+!backend/app/ml/model_metrics.json
 
 # Node / React
 node_modules/

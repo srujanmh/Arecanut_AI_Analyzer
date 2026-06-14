@@ -56,6 +56,28 @@ app.include_router(reports.router, prefix=settings.API_V1_STR)
 app.include_router(drone.router, prefix=settings.API_V1_STR)
 
 @app.on_event("startup")
+def verify_ml_pipeline():
+    import os
+    print("[Startup] Verifying Machine Learning pipeline assets...")
+    try:
+        import joblib
+        import numpy
+        import pandas
+        from PIL import Image
+        import sklearn
+        
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        model_path = os.path.join(current_dir, "ml", "disease_classifier.joblib")
+        if not os.path.exists(model_path):
+            raise FileNotFoundError(f"Model file missing at: {model_path}")
+            
+        clf = joblib.load(model_path)
+        print("[Startup] ML Pipeline verified successfully. Model loaded.")
+    except Exception as e:
+        print(f"[FATAL ERROR] Machine Learning Startup Check Failed: {e}")
+        raise RuntimeError(f"ML Startup verification failed: {e}")
+
+@app.on_event("startup")
 def seed_database():
     # Seeds default credentials and equipment list if tables are empty
     db = Session(bind=engine)
