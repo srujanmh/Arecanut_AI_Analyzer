@@ -1,6 +1,6 @@
-# Agrisense Pro - AI-Powered Arecanut Orchard Management System
+# Arecanut AI Analyzer (Agrisense Pro) - AI-Powered Arecanut Orchard Management System
 
-Agrisense Pro is a complete, enterprise-grade, high-fidelity AgriTech SaaS platform designed to optimize and automate commercial arecanut cultivation. The system integrates real-time IoT soil/NPK sensors, LoRaWAN mesh communication, edge computing preprocessors, YOLOv8 disease classification models, autonomous drone spray triggers, and closed-loop smart irrigation valves.
+**Arecanut AI Analyzer** (Agrisense Pro) is a complete, enterprise-grade, high-fidelity AgriTech SaaS platform designed to optimize and automate commercial arecanut cultivation. The system integrates real-time IoT soil/NPK sensors, LoRaWAN mesh communication, edge computing preprocessors, YOLOv8 disease classification models, autonomous drone spray triggers, and closed-loop smart irrigation valves.
 
 ---
 
@@ -40,7 +40,7 @@ graph TD
 
 ## Role-Based Access Control (RBAC) Matrix
 
-Agrisense Pro enforces strict role-based access to safeguard orchard valves and proprietary analytics:
+Arecanut AI Analyzer enforces strict role-based access to safeguard orchard valves and proprietary analytics:
 
 | Module / Operation | Super Admin | Farmer | Agronomist | Technician |
 |:---|:---:|:---:|:---:|:---:|
@@ -65,7 +65,7 @@ To spin up the entire microservices stack (React, FastAPI, PostgreSQL, InfluxDB,
 
 ```bash
 # Clone the repository and enter directory
-cd arecanut_orchard_system
+cd Arecanut_AI_Analyzer
 
 # Build and run the docker environment
 docker-compose up --build -d
@@ -109,7 +109,7 @@ The services will mount:
 
 ## API Specifications (REST API endpoints)
 
-Agrisense Pro exposes a rich, typed REST API documented via Swagger:
+Arecanut AI Analyzer exposes a rich, typed REST API documented via Swagger:
 
 ### 1. Authentication
 *   `POST /api/v1/auth/login`: Accepts credentials (username/password) and returns a JWT access token.
